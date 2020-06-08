@@ -1,0 +1,14 @@
+class Solution:
+    def twoCitySchedCost(self, costs: List[List[int]]) -> int:
+        s=0
+        n=len(costs)
+        if costs==[]:
+            return 
+        l=[]
+        l1=[]
+        for i in costs:
+            l.append(i[0])
+            l1.append(i[1]-i[0])
+        l.sort()
+        l1.sort()
+        return sum(l)+sum(l1[:n//2])
