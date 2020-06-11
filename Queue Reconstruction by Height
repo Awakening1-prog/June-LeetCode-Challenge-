@@ -1,0 +1,26 @@
+class Solution:
+    def reconstructQueue(self, people: List[List[int]]) -> List[List[int]]:
+        # Edge case
+        if people == []:
+            return
+        
+        queue = [[] for _ in range(len(people))]
+		
+		# Sort the list of people
+        people.sort(key = lambda x: x[0])
+		
+		# Place the shortest person into correct position in the queue
+        smallest_person = people.pop(0)
+        queue[smallest_person[1]] = smallest_person
+        
+        while len(people) != 0:
+            person = people.pop(0)
+            k = person[1] # Create a counter to check how many people are in front
+            
+            for i in range(len(queue)):
+                if queue[i] == [] and k == 0:
+                    queue[i] = person
+                    break
+                elif queue[i] == [] or queue[i][0] >=person[0]:
+                    k -= 1
+        return queue
