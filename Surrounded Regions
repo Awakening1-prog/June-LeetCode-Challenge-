@@ -1,0 +1,42 @@
+class Solution:
+    def mark(self,board,i,j,r,c):
+        if i<0 or j<0 or i>r-1 or j>c-1 or board[i][j]=="X":
+            return
+        board[i][j]="X"
+        self.mark(board,i+1,j,r,c)
+        self.mark(board,i-1,j,r,c)
+        self.mark(board,i,j+1,r,c)
+        self.mark(board,i,j-1,r,c)
+        
+    def dfs(self,board,i,j,r,c,visited):
+        if i<0 or j<0 or i>r-1 or j>c-1 or board[i][j]=="X" or visited[i][j]==1:
+            return
+        if i<=0 or j<=0 or i>=r-1 or j>=c-1:
+            self.seen=True
+        visited[i][j]=1
+        self.dfs(board,i+1,j,r,c,visited)
+        self.dfs(board,i-1,j,r,c,visited)
+        self.dfs(board,i,j-1,r,c,visited)
+        self.dfs(board,i,j+1,r,c,visited)
+    def solve(self, board: List[List[str]]) -> None:
+        """
+        Do not return anything, modify board in-place instead.
+        """
+        self.seen=False
+        if board==[]:
+            return
+        r=len(board)
+        c=len(board[0])
+        if r<=1 or c<=1:
+            return 
+        visited=[[0]*(c) for i in range(r)]
+        for i in range(1,r-1):
+            for j in range(1,c-1):
+                if board[i][j]=="O" and visited[i][j]==0:
+                    self.seen=False
+                    print(":hello")
+                    self.dfs(board,i,j,r,c,visited)
+                    if self.seen==False:
+                        self.mark(board,i,j,r,c)
+                        self.seen=True
+        return board
